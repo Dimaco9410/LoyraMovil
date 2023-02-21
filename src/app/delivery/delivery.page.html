@@ -8,30 +8,81 @@
       <ion-title>Package delivery</ion-title>
     </ion-toolbar>
   </ion-header>
-    
- 
+
+
+
+  <ion-card-title>Shipment Information</ion-card-title>
   <ion-item lines="full" color="success">
     <ion-label position="floating">Track number</ion-label>
     <ion-input placeholder="Phone" id="track_number" color="dark" (focusout)="CheckTracknumber($event)" type="number" align="center" required>
     </ion-input>
   </ion-item>
 
-  <ion-item lines="full" color="primary"> 
-    <ion-label position="floating">Address</ion-label>
-    <ion-input placeholder="Write your destination" id="addres_pd" color="dark" align="center" required>
+  <ion-item lines="full" color="secondary">
+    <ion-label position="floating">Sender name</ion-label>
+    <input type="text" id="id_me" hidden="true">
+    <input type="text" id="status" hidden="true">
+    <ion-input placeholder="Write your name" id="name_d" color="dark" align="center" required>
+    </ion-input>
+  </ion-item>
+
+  <ion-item lines="full" color="secondary"> 
+    <ion-label position="floating"> Shipping Address</ion-label>
+    <ion-input placeholder="Write street, Zip code and number" id="addres_d" color="dark" align="center" required>
+    </ion-input>
+  </ion-item>
+
+  <ion-item lines="full" color="success"> 
+    <ion-label position="floating">Ship to</ion-label>
+    <ion-input placeholder="Contact name  " id="ShiptoName_d" color="dark" align="center" required>
+    </ion-input>
+  </ion-item>
+
+  <ion-item lines="full" color="secondary">
+    <ion-label position="floating">Phone</ion-label>
+    <ion-input placeholder="Phone" id="phone_d" color="dark" (focusout)="CheckPhoneDelivery($event)" type="number" align="center" required>
     </ion-input>
   </ion-item>
 
     <div id="container">
-      <ion-button (click)="PictureOptions()" expand="full" id="PhotoButton_s" >Take Picture</ion-button>
+      <ion-button (click)="PictureOptions()" expand="full" id="PhotoButton_d" >Take Picture</ion-button>
       
       <img [src]="clickedImage" id="Photo"/>
   
       <ion-button expand="block" (click)="SaveInfoDeliver()" id="savebutton_delivery" color="dark">Save</ion-button>
   
+      
       <div id="preloader" align="center" style="display: none">
         <img src="../assets/icon/s.gif" alt="validando...">
-    </div>
+     </div>
   
     </div>
-  </ion-content>
+    
+  <div align="center">
+    <h1>Delivery List</h1>
+  </div>
+
+  <ion-item *ngFor="let D of DeliveryPDFServer">
+    <ion-card style="width: 100%;" align="center" color="medium">
+      <ion-label>
+
+        
+                <p>Customer name</p>
+                <h1>{{D.sender_d}}</h1>
+                <br>
+                <p>Shipping address</p>
+                <h1>{{D.ship_address_d}}</h1>
+                <br>
+      
+
+          
+
+      </ion-label>
+
+      <br>
+      
+    </ion-card>
+      
+  </ion-item>
+
+</ion-content>

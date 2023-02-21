@@ -28,19 +28,28 @@ export class DeliveryPage  {
   clickedImage: any;
   imageContent: any;
 
-  MemberPDFServer: any[] = [];
+  DeliveryPDFServer: any[] = [];
  
 
 //VALIDATIONS
 
 CheckTracknumber(event: FocusEvent) {
-  var Phone = (<HTMLInputElement>document.getElementById('track_number')).value;
-  var PhoneLength = Phone?.length;
-  if (!PhoneLength || PhoneLength !== 10) {
+  var Track = (<HTMLInputElement>document.getElementById('track_number')).value;
+  var TrackLength = Track?.length;
+  if (!TrackLength || TrackLength !== 15) {
     Swal.fire({ title: 'Error', icon: 'error', text: 'The phone provided is longer or shorter than 10 characters, please try again', heightAuto: false });
     (<HTMLInputElement>document.getElementById('track_number')).value = '';
   }
 }
+CheckPhoneDelivery(event: FocusEvent) {
+  var Track = (<HTMLInputElement>document.getElementById('track_number')).value;
+  var TrackLength = Track?.length;
+  if (!TrackLength || TrackLength !== 10) {
+    Swal.fire({ title: 'Error', icon: 'error', text: 'The phone provided is longer or shorter than 10 characters, please try again', heightAuto: false });
+    (<HTMLInputElement>document.getElementById('track_number')).value = '';
+  }
+}
+
 
 //CAMARA
 
@@ -128,22 +137,24 @@ CheckTracknumber(event: FocusEvent) {
 SaveInfoDeliver(){
 
     $('#Preloader').show();
-    $('#PhotoButtonPhoto').attr('disabled','disabled');
+    $('#PhotoButton_d').attr('disabled','disabled');
     $('#SaveMembutton').attr('disabled','disabled');
     var Photo = this.imageContent;
-    var name = $('#name_m').val();
-    var lastname = $('#lastname_m').val();
-    var phone = $('#phone_m').val();
-    var email = $('#email_m').val();
+    var Name = $('#name_d').val();
+    var TrackN = $('#track_number').val();
+    var Address = $('#addres_d').val();
+    var Shipto = $('#ShiptoName_d').val();
+    var Phone = $('#phone_d').val();
     var status = $('#status').val();
 
 
     const data = {
       Photo:Photo,
-      name:name,
-      lastname:lastname,
-      phone:phone,
-      email:email,
+      Name:Name,
+      TrackN:TrackN,
+      Address:Address,
+      Shipto:Shipto,
+      Phone:Phone,
       status:status
     };
 
@@ -151,25 +162,26 @@ SaveInfoDeliver(){
       'Content-Type' : 'application/x-www-form-urlencoded'
     }
 
-    if(Photo!=undefined && name!="" && lastname!="" && phone!="" && email!=""){
-      this.http.post(this.BaseUrl+'index.php/Members/SaveMemberALL', data, headers).then((response) =>{
+    if(Photo!=undefined && Name!="" && TrackN!="" && Address!="" && Shipto!="" && Phone!=""){
+      this.http.post(this.BaseUrl+'index.php/Dashboard/SaveDeliveryALL', data, headers).then((response) =>{
 
         $('#Preloader').hide();
-        $('#PhotoButtonPhoto').removeAttr('disabled');
-        $('#SaveMembutton').removeAttr('disabled');
+        $('#PhotoButton_d').removeAttr('disabled');
+        $('#savebutton_delivery').removeAttr('disabled');
         $('#Photo').attr('src',"");
-        $('#name_m').val("");
-        $('#lastname_m').val("");
-        $('#email_m').val("");
-        $('#phone_m').val("");
+        $('#name_d').val("");
+        $('#track_number').val("");
+        $('#addres_d').val("");
+        $('#ShiptoName_d').val("");
+        $('#phone_d').val("");
 
         var Response = response.data;
         var Object = JSON.parse(response.data);
 
       if(Object != ""){
-        this.MemberPDFServer = JSON.parse(response.data);
+        this.DeliveryPDFServer = JSON.parse(response.data);
       }else{
-        this.MemberPDFServer = JSON.parse(response.data);
+        this.DeliveryPDFServer = JSON.parse(response.data);
         Swal.fire({title:'Error', icon:'error', text: 'There is no info for the date selected',heightAuto:false});
       }
 
@@ -180,8 +192,8 @@ SaveInfoDeliver(){
       }).catch(error => {
 
         $('#Preloader').hide();
-        $('#PhotoButtonPhoto').removeAttr('disabled');
-        $('#SaveMembutton').removeAttr('disabled');
+        $('#PhotoButton_d').removeAttr('disabled');
+        $('#savebutton_delivery').removeAttr('disabled');
         $('#Photo').attr('src',"");
 
 
@@ -205,21 +217,21 @@ SaveInfoDeliver(){
           }).then((result) => {
         if (result.value) {
             $("#Preloader").hide();
-            $("#SaveMembutton").removeAttr('disabled');
+            $("#savebutton_delivery").removeAttr('disabled');
 
             } 
           });
         }else{
           $("#Preloader").hide();
-          $("#SaveMembutton").removeAttr('disabled');
+          $("#savebutton_delivery").removeAttr('disabled');
           Swal.fire({title:'Error', icon:'error', text: 'An internal server error has occurred please contact the site admin',heightAuto:false});
         }
 
       });
     }else{
       $("#Preloader").hide();
-      $('#PhotoButtonPhoto').removeAttr('disabled');
-      $("#SaveMembutton").removeAttr('disabled');
+      $('#PhotoButton_d').removeAttr('disabled');
+      $("#savebutton_delivery").removeAttr('disabled');
       Swal.fire({title:'Warning', icon:'warning', text: 'There is missing info on the form',heightAuto:false});
     }
 

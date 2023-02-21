@@ -28,7 +28,8 @@ export class MembersPage  {
   clickedImage: any;
   imageContent: any;
 
-  MemberPDFServer: any[] = [];
+ // MemberPDFServer: any[] = [];
+  MemberPDFServer : any;
  
 
 //VALIDATIONS
@@ -172,15 +173,7 @@ CheckEmail(event: Event) {
         $('#phone_m').val("");
 
         var Response = response.data;
-        var Object = JSON.parse(response.data);
-
-      if(Object != ""){
-        this.MemberPDFServer = JSON.parse(response.data);
-      }else{
-        this.MemberPDFServer = JSON.parse(response.data);
-        Swal.fire({title:'Error', icon:'error', text: 'There is no info for the date selected',heightAuto:false});
-      }
-
+      
   
         
         Swal.fire({title:'Success', icon:'success', text: 'Data has been saved successfully',heightAuto:false});
@@ -238,42 +231,52 @@ CheckEmail(event: Event) {
   
  //Show the list
 
- MembersList() {
-  const url = this.BaseUrl + "index.php/Members/ActiveMemberList";
+ MemberList(){
 
-  const request = new XMLHttpRequest();
-  request.open("GET", url, true);
-  request.timeout = 30000;
-  request.setRequestHeader("Content-Type", "application/json");
-
-  request.onload = () => {
-    if (request.status === 200) {
-      const obj = JSON.parse(request.responseText);
-
-      if (obj !== "") {
-        this.MemberPDFServer = JSON.parse(request.responseText);
-      } else {
-        this.MemberPDFServer = JSON.parse(request.responseText);
-      }
-    } else {
-      const error = "An error occurred during the request: " + request.status;
-      console.error(error);
-    }
+  const data ={
+   
+      
   };
 
-  request.ontimeout = () => {
-    const error = "The request timed out.";
-    console.error(error);
-  };
+  const headers = {
+    'Content-Type' : 'application/x-www-form-urlencoded'
+  }
 
-  request.onerror = () => {
-    const error = "An error occurred during the request.";
-    console.error(error);
-  };
+      this.http.get(this.BaseUrl+'index.php/Members/ActiveMembersList', data, headers).then((response) =>{
+        
+        this.MemberPDFServer =  JSON.parse(response.data);
+         
+      }).catch(error => {
+        
+        console.log(error.status);
+        console.log(error.error);// Mensaje de eeror en una cadena.
+        console.log(error.headers);
 
-  request.send();
-}
 
+        if (error.status=="timeout") {
+
+          Swal.fire({   
+            title: 'Error',
+            text: 'Your device is not connected to internet or your connection is very slow.\n Please try again' ,   
+            icon: 'error',   
+            heightAuto:false,
+            allowOutsideClick: false,
+            showCancelButton: false,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "OK",   
+            cancelButtonText: "No, Cancelar",   
+          }).then((result) => {
+        if (result.value) {
+
+            } 
+          });
+        }else{
+          Swal.fire({title:'Error', icon:'error', text: 'An internal server error has occurred please contact the site admin',heightAuto:false});
+        }
+
+      });
+
+  }
 
 
   ngOnInit(){

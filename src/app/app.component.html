@@ -34,6 +34,11 @@
             <ion-icon slot="start" [name]="'book-outline'"></ion-icon>
             <ion-label>Download your receipt</ion-label>
           </ion-item>
+
+          <ion-item [routerLink]="'/delivery'" [routerDirection]="'forward'" id="'delivery'">
+            <ion-icon slot="start" [name]="'Create'"></ion-icon>
+            <ion-label>Package service</ion-label>
+          </ion-item>
           
           <ion-item id="close" (click)="LogOut()">
             <ion-icon slot="start" [name]="'close-circle'"></ion-icon>
