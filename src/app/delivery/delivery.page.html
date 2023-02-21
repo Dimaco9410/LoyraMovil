@@ -1,9 +1,37 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Delivery</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true">
 
-<ion-content>
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Package delivery</ion-title>
+    </ion-toolbar>
+  </ion-header>
+    
+ 
+  <ion-item lines="full" color="success">
+    <ion-label position="floating">Track number</ion-label>
+    <ion-input placeholder="Phone" id="track_number" color="dark" (focusout)="CheckTracknumber($event)" type="number" align="center" required>
+    </ion-input>
+  </ion-item>
 
-</ion-content>
+  <ion-item lines="full" color="primary"> 
+    <ion-label position="floating">Address</ion-label>
+    <ion-input placeholder="Write your destination" id="addres_pd" color="dark" align="center" required>
+    </ion-input>
+  </ion-item>
+
+    <div id="container">
+      <ion-button (click)="PictureOptions()" expand="full" id="PhotoButton_s" >Take Picture</ion-button>
+      
+      <img [src]="clickedImage" id="Photo"/>
+  
+      <ion-button expand="block" (click)="SaveInfoDeliver()" id="savebutton_delivery" color="dark">Save</ion-button>
+  
+      <div id="preloader" align="center" style="display: none">
+        <img src="../assets/icon/s.gif" alt="validando...">
+    </div>
+  
+    </div>
+  </ion-content>
