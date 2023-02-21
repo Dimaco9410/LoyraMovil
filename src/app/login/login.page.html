@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Login LOYRA APP</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="Warning" class="auth-form">
+  
+	<br>
+	<br>
+  
+	<div align="center">
+		<img src="../assets/icon/Login.jpg" width="200px" height="150px">
+	  </div>
+  
+	  <div id="preloader" align="center" style="display: none">
+		  <img src="../assets/icon/s.gif" alt="validando...">
+	  </div>
+  
+	  <br>
+  
+	  <div id="panellogin" align="center">
+	  
+		<form>
+  
+		  <ion-item lines="full" color="primary">
+			<ion-label position="floating">User</ion-label>
+			<ion-input color="dark" id="user" placeholder="User" align="center" required></ion-input>
+		  </ion-item>
+  
+		  <ion-item lines="full" color="primary">
+			<ion-label position="floating">Password</ion-label>
+			<ion-input type="password" color="dark" id="pass" placeholder="Password" align="center" required></ion-input>
+		  </ion-item>
+		  
+		  <br>
+  
+		  <ion-button (click)="Login()" id="botonlogin" expand="block" color="dark">Login</ion-button>
+  
+		  <span class="divider line one-line">or</span>
+  
+		  <ion-button (click)="ResetLogin()" id="botonresetlogin" expand="block" color="dark">Reset Session</ion-button>
+  
+		  <span class="divider line one-line">or</span>
+  
+		  <ion-button (click)="EsconderPanel()" id="botonesconder" expand="block" color="dark">Forgot Password</ion-button>
+  
+	   </form>
+  
+	  </div>
+  
+	  <div id=panelcontraseña align="center">
+  
+		<h1 class="title" align="center">Validate your info</h1>
+		
+		<div class="list">
+  
+		  <ion-item color="primary">
+			<ion-label position="floating">User</ion-label>
+			<ion-input color="dark" id="usuariores" placeholder="User" align="center"></ion-input>
+		  </ion-item>
+  
+		  <ion-item color="primary">
+			<ion-label position="floating">Email</ion-label>
+			<ion-input color="dark" id="correores" placeholder="Email" align="center"></ion-input>
+		  </ion-item>
+  
+		  <ion-item color="primary">
+			<ion-label position="floating">Phone</ion-label>
+			<ion-input color="dark" id="telefonores"  placeholder="Phone" align="center"></ion-input>
+		  </ion-item>
+  
+		</div>   
+  
+		  <br>
+  
+		<ion-button (click)="RestablecerContrasena()" id="botonrestablecer" expand="full" color="dark">Restore</ion-button>
+		
+		<ion-button (click)="MostrarPanel()" id="botonmostrar" expand="full" color="dark">Back</ion-button>
+  
+	  </div>
+  
+  </ion-content>

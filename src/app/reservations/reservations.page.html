@@ -1,0 +1,82 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Booking details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  
+  <ion-card color="primary">
+    <ion-card-header>
+   
+      <div align="center">
+        <img src="../assets\icon/Home.png" width="450px" height="250px">
+      </div>
+      
+    </ion-card-header>
+  
+    <ion-card-content>
+ 
+      <ion-item lines="full" color="medium">
+        <ion-label position="floating">Customer's name</ion-label>
+        <input type="text" id="id_u" hidden="true">
+        <input type="text" id="rol_u" hidden="true">
+        <input type="text" id="type" hidden="true">
+        <input type="text" id="status" hidden="true">
+        <ion-input placeholder="Name" id="name_reservation" color="dark" align="center" required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="full" color="medium"> 
+        <ion-label position="floating">Last Name</ion-label>
+        <ion-input placeholder="Last Name" id="lastname_reservation" color="dark" align="center" required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="full" color="success">
+        <ion-label position="floating">Phone</ion-label>
+        <ion-input placeholder="Phone" id="phone_reservation" color="dark" (focusout)="CheckPhoneReservation($event)" type="number" align="center" required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item lines="full" color="success">
+        <ion-label position="floating">Destination</ion-label>
+        <ion-select placeholder="Select language" id="DestinationDataPDF" color="dark" cancelText="Cancel"  align="center" 
+        required>
+          <ion-select-option value="" >Select one</ion-select-option>
+          <ion-select-option value="Jalpan-Qro" >Jalpan-Qro</ion-select-option>
+          <ion-select-option value="Qro-Jalpan" >Qro-Jalpan</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item lines="full" color="medium">
+        <ion-label position="floating">Driver</ion-label>
+        <ion-select placeholder="Select your favorite Driver" id="DraverData" color="dark" cancelText="Cancel"  align="center" 
+        required>
+          <ion-select-option value="" >Select one</ion-select-option>
+          <ion-select-option value="HT" >Homero Trejo</ion-select-option>
+          <ion-select-option value="FR" >Fabian Ramirez</ion-select-option>
+          <ion-select-option value="VM" >Victor Martinez</ion-select-option>
+          <ion-select-option value="Otro" >Otro</ion-select-option>
+        </ion-select>
+      </ion-item>
+      
+      
+  <ion-item>
+    <ion-label position="floating">Comments of your pick up, specify where I will pick up you</ion-label>
+    <ion-textarea color="dark" id="CommentsDataPDF" placeholder="Text" align="center" required (focusout)="CheckDestinationText1()"></ion-textarea>
+  </ion-item>
+
+      <div id="Preloader" align="center" style="display: none">
+       <img src= "../assets/icon/s.gif" alt="validando..">
+      </div>
+      
+      <ion-button (click)="SaveReservationPDF()" id= "ButtonReservationPDF" expand="block">Book</ion-button>
+    </ion-card-content>
+  </ion-card>
+ 
+</ion-content>

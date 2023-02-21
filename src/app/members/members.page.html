@@ -1,0 +1,85 @@
+<ion-content [fullscreen]="true">
+
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Become a new member </ion-title>
+    </ion-toolbar>
+  </ion-header>
+    
+  <ion-item lines="full" color="secondary">
+    <ion-label position="floating">Member name</ion-label>
+    <input type="text" id="id_me" hidden="true">
+    <input type="text" id="status" hidden="true">
+    <ion-input placeholder="Write your name" id="name_m" color="dark" align="center" required>
+    </ion-input>
+  </ion-item>
+
+
+  <ion-item lines="full" color="secondary"> 
+    <ion-label position="floating">lastname</ion-label>
+    <ion-input placeholder="Student lastname" id="lastname_m" color="dark" align="center" required>
+    </ion-input>
+  </ion-item>
+
+  <ion-item lines="full" color="secondary">
+    <ion-label position="floating">Phone</ion-label>
+    <ion-input placeholder="Phone" id="phone_m" color="dark" (focusout)="CheckPhoneMembers($event)" type="number" align="center" required>
+    </ion-input>
+  </ion-item>
+
+  <ion-item lines="full" color="secondary">
+    <ion-label position="floating">Email</ion-label>
+    <ion-input placeholder="Email" id="email_m" color="dark" (focusout)="CheckEmail($event)" type="email" align="center" required>
+    </ion-input>
+  </ion-item>
+
+    <div id="container">
+      <ion-button (click)="PictureOptions()" expand="full" id="PhotoButtonPhoto" >Take Picture</ion-button>
+      
+      <img [src]="clickedImage" id="Photo"/>
+  
+      <ion-button expand="block" (click)="SaveInfoMember()" id="SaveMembutton" color="dark">Save</ion-button>
+  
+      <div id="preloader" align="center" style="display: none">
+        <img src="../assets/icon/s.gif" alt="validando...">
+     </div>
+  
+    </div>
+    
+  <div align="center">
+    <h1>Members List</h1>
+  </div>
+
+  <ion-item *ngFor="let m of MemberPDFServer">
+    <ion-card style="width: 100%;" align="center" color="medium">
+      <ion-label>
+
+        
+          <p>Member's name</p>
+          <h1>{{m.name_m}}</h1>
+          <br>
+          <p>Last name </p>
+          <h1>{{m.lastname_m}}</h1>
+          <br>
+          <p>Phone</p>
+          <h1>{{m.phone_m}}</h1>
+          <br>
+          <p>Email</p>
+          <h1>{{m.email_m}}</h1>
+          <br>
+  
+
+          
+
+      </ion-label>
+
+      <br>
+      
+    </ion-card>
+      
+  </ion-item>
+
+</ion-content>

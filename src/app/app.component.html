@@ -1,0 +1,49 @@
+<ion-app>
+  <ion-menu side="start" menuId="first" contentId="content1">
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+          </ion-buttons>
+          <ion-item [routerLink]="'/profile'" [routerDirection]="'forward'" id="'profile'" slot="end" (click)="CloseMenu()">
+            <ion-icon [name]="'person-circle-outline'"></ion-icon>
+          </ion-item>
+          <ion-title>Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content color="light">
+      <ion-list>
+        <ion-menu-toggle auto-hide="true">
+
+          <ion-item [routerLink]="'/home'" [routerDirection]="'forward'" id="'home'">
+            <ion-icon slot="start" [name]="'home'"></ion-icon>
+            <ion-label>Home</ion-label>
+          </ion-item>
+
+          <ion-item [routerLink]="'/members'" [routerDirection]="'forward'" id="'members'">
+            <ion-icon slot="start" [name]="'analytics-outline'"></ion-icon>
+            <ion-label>Become a member</ion-label>
+          </ion-item>
+
+          <ion-item [routerLink]="'/reservations'" [routerDirection]="'forward'" id="'reservations'">
+            <ion-icon slot="start" [name]="'book-outline'"></ion-icon>
+            <ion-label>Book your trip</ion-label>
+          </ion-item>
+
+          <ion-item [routerLink]="'/tickets'" [routerDirection]="'forward'" id="'tickets'">
+            <ion-icon slot="start" [name]="'book-outline'"></ion-icon>
+            <ion-label>Download your receipt</ion-label>
+          </ion-item>
+          
+          <ion-item id="close" (click)="LogOut()">
+            <ion-icon slot="start" [name]="'close-circle'"></ion-icon>
+            <ion-label>Log Out</ion-label>
+          </ion-item>
+
+        </ion-menu-toggle>
+      </ion-list>
+    </ion-content>
+    </ion-menu>
+  <ion-router-outlet id="content1"></ion-router-outlet>
+</ion-app>
+

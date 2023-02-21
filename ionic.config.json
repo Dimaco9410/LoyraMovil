@@ -1,0 +1,7 @@
+{
+  "name": "LoyraMovil",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

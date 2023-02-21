@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Download your tikets</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-accordion-group>
+      <ion-accordion value="start">
+        <ion-item slot="header">
+          <ion-label>Pick Date</ion-label>
+          <ion-note slot="end">{{DateFormat | date}}</ion-note>
+        </ion-item>
+        <ion-datetime
+          slot="content"
+          [(ngModel)]="DateFormat"
+          size="cover"
+          presentation="date"
+          id="DateTicketPDF"
+        ></ion-datetime>
+      </ion-accordion>
+    </ion-accordion-group>
+  </ion-list>
+
+  <div id="Preloader" align="center" style="display: none">
+      <img src="../assets/icon/s.gif" alt="validando...">
+  </div>
+  <ion-button expand="block" (click)="GetTicketPDF()" id="ButtonTicketPDF">Search</ion-button >
+  <ion-item *ngFor="let R of ReserPDFServer" >
+    <ion-card style="width: 100%;" align="center" color="medium">
+      <ion-label>
+
+             <p>Name</p>
+              <h1>{{R.name_c}}</h1>
+              <br>
+              <p>Destination</p>
+              <h1>{{R.destination_rese}}</h1>
+              <br>
+              <p>Departure time</p>
+              <h1>{{R.date}}</h1>
+              <br>
+              <p>Comments for pick up you</p>
+              <h1>{{R.comments_p}}</h1>
+              <br>
+
+        <ion-button (click)="GenerateTicketPDF(R.id_rese)" id="ButtonGenerateTicketPDF" style="font-size: 20px;">Download your Receipt</ion-button>
+
+      </ion-label>
+
+      <br>
+      
+    </ion-card>
+      
+  </ion-item>
+
+</ion-content>
+  
