@@ -133,6 +133,9 @@ export class TicketsPage implements OnInit {
               text: 'Customer name: ' +Name_r+ '  '+LastName_r+' Destination: ' +Destination_r ,style:'header',alignment:'center'
             },
             {
+              text: '\t\t\t\t\t\t\t\t\t\t\t\t', style:'negro',alignment:'center'
+            },
+            {
               text: 'Customer phone: ' +Phone_r+ ', Chofer: ' +Driver_r ,style:'header',alignment:'center'
             },
 

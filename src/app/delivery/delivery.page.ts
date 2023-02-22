@@ -21,14 +21,17 @@ import * as $ from "jquery";
 export class DeliveryPage  {
 
   
-  BaseUrl = this.Link.BaseLink(); 
-  constructor(private http: HTTP, private Link: AppComponent, private camera: Camera, private actionSheetCtrl: ActionSheetController) {  }
+  BaseUrl = this.Link.BaseLink();
+  constructor(private http: HTTP, private Link: AppComponent, private camera: Camera, private actionSheetCtrl: ActionSheetController) { 
+    this.DeliveryList();
+   }
 
   DataHome: any;
   clickedImage: any;
-  imageContent: any;
+  imageContent_D: any;
 
-  DeliveryPDFServer: any[] = [];
+  
+  DeliveryPDFServer : any;
  
 
 //VALIDATIONS
@@ -54,7 +57,7 @@ CheckPhoneDelivery(event: FocusEvent) {
 //CAMARA
 
 
-  FromCamera() {
+FromCamera() {
 
     const options: CameraOptions = {
       quality: 50,
@@ -69,7 +72,7 @@ CheckPhoneDelivery(event: FocusEvent) {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      this.imageContent = imageData;
+      this.imageContent_D = imageData;
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.clickedImage = base64Image;
     }, (err) => {
@@ -78,7 +81,7 @@ CheckPhoneDelivery(event: FocusEvent) {
     });
   }
 
-  FromGallery() {
+FromGallery() {
 
     const options: CameraOptions = {
       quality: 100,
@@ -94,7 +97,7 @@ CheckPhoneDelivery(event: FocusEvent) {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
-      this.imageContent = imageData;
+      this.imageContent_D = imageData;
       let base64Image = 'data:image/jpeg;base64,' + imageData;
       this.clickedImage = base64Image;
     }, (err) => {
@@ -139,7 +142,7 @@ SaveInfoDeliver(){
     $('#Preloader').show();
     $('#PhotoButton_d').attr('disabled','disabled');
     $('#SaveMembutton').attr('disabled','disabled');
-    var Photo = this.imageContent;
+    var PhotoD = this.imageContent_D;
     var Name = $('#name_d').val();
     var TrackN = $('#track_number').val();
     var Address = $('#addres_d').val();
@@ -149,7 +152,7 @@ SaveInfoDeliver(){
 
 
     const data = {
-      Photo:Photo,
+      PhotoD:PhotoD,
       Name:Name,
       TrackN:TrackN,
       Address:Address,
@@ -162,13 +165,13 @@ SaveInfoDeliver(){
       'Content-Type' : 'application/x-www-form-urlencoded'
     }
 
-    if(Photo!=undefined && Name!="" && TrackN!="" && Address!="" && Shipto!="" && Phone!=""){
+    if(PhotoD!=undefined && Name!="" && TrackN!="" && Address!="" && Shipto!="" && Phone!=""){
       this.http.post(this.BaseUrl+'index.php/Dashboard/SaveDeliveryALL', data, headers).then((response) =>{
 
         $('#Preloader').hide();
         $('#PhotoButton_d').removeAttr('disabled');
         $('#savebutton_delivery').removeAttr('disabled');
-        $('#Photo').attr('src',"");
+        $('#PhotoD').attr('src',"");
         $('#name_d').val("");
         $('#track_number').val("");
         $('#addres_d').val("");
@@ -239,7 +242,54 @@ SaveInfoDeliver(){
     
   }
 
+DeliveryList(){
+
+    const data ={
+     
+        
+    };
   
+    const headers = {
+      'Content-Type' : 'application/x-www-form-urlencoded'
+    }
+  
+        this.http.get(this.BaseUrl+'index.php/Delivery/ActiveDeliveryList', data, headers).then((response) =>{
+          
+          console.log(response.data)
+          this.DeliveryPDFServer =  JSON.parse(response.data);
+          //console.log(this.MemberPDFServer);
+           
+        }).catch(error => {
+          
+          console.log(error.status);
+          console.log(error.error);// Mensaje de eeror en una cadena.
+          console.log(error.headers);
+        
+  
+          if (error.status=="timeout") {
+  
+            Swal.fire({   
+              title: 'Error',
+              text: 'Your device is not connected to internet or your connection is very slow.\n Please try again' ,   
+              icon: 'error',   
+              heightAuto:false,
+              allowOutsideClick: false,
+              showCancelButton: false,   
+              confirmButtonColor: "#DD6B55",   
+              confirmButtonText: "OK",   
+              cancelButtonText: "No, Cancelar",   
+            }).then((result) => {
+          if (result.value) {
+  
+              } 
+            });
+          }else{
+            Swal.fire({title:'Error', icon:'error', text: 'An internal server error has occurred please contact the site admin',heightAuto:false});
+          }
+  
+        });
+  
+    } 
 
   ngOnInit() {
   }

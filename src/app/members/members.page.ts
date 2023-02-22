@@ -22,16 +22,16 @@ export class MembersPage  {
 
   
   BaseUrl = this.Link.BaseLink(); 
-  constructor(private http: HTTP, private Link: AppComponent, private camera: Camera, private actionSheetCtrl: ActionSheetController) {  }
 
+  MemberPDFServer : any;
   DataHome: any;
   clickedImage: any;
   imageContent: any;
 
- // MemberPDFServer: any[] = [];
-  MemberPDFServer : any;
- 
-
+  constructor(private http: HTTP, private Link: AppComponent, private camera: Camera, private actionSheetCtrl: ActionSheetController) {  
+  
+    this.MemberList();
+  }
 //VALIDATIONS
 
 CheckPhoneMembers(event: FocusEvent) {
@@ -172,7 +172,7 @@ CheckEmail(event: Event) {
         $('#email_m').val("");
         $('#phone_m').val("");
 
-        var Response = response.data;
+        this.MemberList();
       
   
         
@@ -244,14 +244,16 @@ CheckEmail(event: Event) {
 
       this.http.get(this.BaseUrl+'index.php/Members/ActiveMembersList', data, headers).then((response) =>{
         
+        console.log(response.data)
         this.MemberPDFServer =  JSON.parse(response.data);
+        console.log(this.MemberPDFServer);
          
       }).catch(error => {
         
         console.log(error.status);
         console.log(error.error);// Mensaje de eeror en una cadena.
         console.log(error.headers);
-
+      
 
         if (error.status=="timeout") {
 
@@ -277,7 +279,83 @@ CheckEmail(event: Event) {
       });
 
   }
+  
+ EditMember(PaID: any){
 
+    $("#Preloader").show();
+
+    var PaID = PaID;
+
+    if(PaID!=""){
+
+      const data = {
+        PaID:PaID
+      };
+  
+      const headers = {
+        'Content-Type' : 'application/x-www-form-urlencoded'
+      }
+
+      this.http.post(this.BaseUrl+'index.php/Paciente/PacienteById', data, headers).then((response) =>{
+
+        $('#Preloader').hide();
+        
+        var Object = JSON.parse(response.data);
+
+        var id = Object[0].id_paciente;
+        var nombre = Object[0].nombrepa;
+        var apellido = Object[0].apellidopa;
+        var email = Object[0].email;
+        var edad = Object[0].edad;
+        var genero = Object[0].genero;
+        var phone = Object[0].phone;
+        var status = Object[0].status;
+
+        $('#IDPaciente').val(id);
+        $('#NombrePaciente').val(nombre);
+        $('#ApellidoPaciente').val(apellido);
+        $('#EmailPaciente').val(email);
+        $('#EdadPaciente').val(edad);
+        $('#GeneroPaciente').val(genero);
+        $('#PhonePaciente').val(phone);
+        $('#StatusPaciente').val(status);
+
+        $("#savebutton_paciente").hide(); 
+        $("#updatebutton_paciente").removeAttr('hidden');
+
+
+      }).catch(error => {
+        
+        console.log(error.status);
+        console.log(error.error);// Mensaje de eeror en una cadena.
+        console.log(error.headers);
+
+
+        if (error.status="timeout") {
+
+          Swal.fire({   
+            title: 'Error',
+            text: 'Your device is not connected to internet or your connection is very slow.\n Please try again' ,   
+            icon: 'error',   
+            heightAuto:false,
+            allowOutsideClick: false,
+            showCancelButton: false,   
+            confirmButtonColor: "#DD6B55",   
+            confirmButtonText: "OK",   
+            cancelButtonText: "No, Cancelar",   
+          }).then((result) => {
+        if (result.value) {
+
+            } 
+          });
+        }else{
+
+          Swal.fire({title:'Error', icon:'error', text: 'An internal server error has occurred please contact the site admin',heightAuto:false});
+        }
+
+      });
+    }
+  }
 
   ngOnInit(){
    
