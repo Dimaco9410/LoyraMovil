@@ -65,17 +65,28 @@
         </ion-select>
       </ion-item>
       
-      
   <ion-item>
     <ion-label position="floating">Comments of your pick up, specify where I will pick up you</ion-label>
     <ion-textarea color="dark" id="CommentsDataPDF" placeholder="Text" align="center" required (focusout)="CheckDestinationText1()"></ion-textarea>
   </ion-item>
 
-      <div id="Preloader" align="center" style="display: none">
-       <img src= "../assets/icon/s.gif" alt="validando..">
-      </div>
+  <div id="container">
+   
+
+    <ion-button (click)="SaveReservationPDF()" id= "ButtonReservationPDF" expand="block">Book</ion-button>
+   
+
+    <div id="preloader" align="center" style="display: none">
+      <img src="../assets/icon/s.gif" alt="validando...">
+   </div>
+
+  </div>
+  
+    
       
-      <ion-button (click)="SaveReservationPDF()" id= "ButtonReservationPDF" expand="block">Book</ion-button>
+
+    
+    
     </ion-card-content>
   </ion-card>
  

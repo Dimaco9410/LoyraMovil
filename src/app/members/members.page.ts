@@ -23,15 +23,18 @@ export class MembersPage  {
   
   BaseUrl = this.Link.BaseLink(); 
 
-  MemberPDFServer : any;
-  DataHome: any;
-  clickedImage: any;
-  imageContent: any;
-
   constructor(private http: HTTP, private Link: AppComponent, private camera: Camera, private actionSheetCtrl: ActionSheetController) {  
   
     this.MemberList();
   }
+
+ 
+  DataHome: any;
+  clickedImage: any;
+  imageContent: any;
+
+  MemberPDFServer : any;
+
 //VALIDATIONS
 
 CheckPhoneMembers(event: FocusEvent) {
@@ -51,6 +54,9 @@ CheckEmail(event: Event) {
     emailInput.value = '';
   }
 }
+
+
+
 //CAMARA
 
 
@@ -144,7 +150,7 @@ CheckEmail(event: Event) {
     var lastname = $('#lastname_m').val();
     var phone = $('#phone_m').val();
     var email = $('#email_m').val();
-    var status = $('#status').val();
+    var status = $('#status_me').val();
 
 
     const data = {
@@ -166,6 +172,7 @@ CheckEmail(event: Event) {
         $('#Preloader').hide();
         $('#PhotoButtonPhoto').removeAttr('disabled');
         $('#SaveMembutton').removeAttr('disabled');
+
         $('#Photo').attr('src',"");
         $('#name_m').val("");
         $('#lastname_m').val("");
@@ -231,7 +238,7 @@ CheckEmail(event: Event) {
   
  //Show the list
 
- MemberList(){
+  MemberList(){
 
   const data ={
    
@@ -279,49 +286,50 @@ CheckEmail(event: Event) {
       });
 
   }
+
   
- EditMember(PaID: any){
+  EditMember(MeID: any){
 
     $("#Preloader").show();
+    $('#PhotoButtonPhoto').attr('disabled','disabled');
 
-    var PaID = PaID;
+    var MeID = MeID;
 
-    if(PaID!=""){
+    if(MeID!=""){
 
       const data = {
-        PaID:PaID
+        MeID:MeID
       };
   
       const headers = {
         'Content-Type' : 'application/x-www-form-urlencoded'
       }
 
-      this.http.post(this.BaseUrl+'index.php/Paciente/PacienteById', data, headers).then((response) =>{
+      this.http.post(this.BaseUrl+'index.php/Members/MemberById', data, headers).then((response) =>{
 
         $('#Preloader').hide();
         
         var Object = JSON.parse(response.data);
 
-        var id = Object[0].id_paciente;
-        var nombre = Object[0].nombrepa;
-        var apellido = Object[0].apellidopa;
-        var email = Object[0].email;
-        var edad = Object[0].edad;
-        var genero = Object[0].genero;
-        var phone = Object[0].phone;
+        var id = Object[0].id_Member;
+        var name = Object[0].name_m;
+        var lastname = Object[0].lastname_m;
+        var phone = Object[0].phone_m;
+        var email = Object[0].email_m;
         var status = Object[0].status;
+        
+        
 
-        $('#IDPaciente').val(id);
-        $('#NombrePaciente').val(nombre);
-        $('#ApellidoPaciente').val(apellido);
-        $('#EmailPaciente').val(email);
-        $('#EdadPaciente').val(edad);
-        $('#GeneroPaciente').val(genero);
-        $('#PhonePaciente').val(phone);
-        $('#StatusPaciente').val(status);
 
-        $("#savebutton_paciente").hide(); 
-        $("#updatebutton_paciente").removeAttr('hidden');
+        $('#id_me').val(id);
+        $('#name_m').val(name);
+        $('#lastname_m').val(lastname);
+        $('#phone_m').val(phone);
+        $('#email_m').val(email);
+        $('#status_me').val(status);
+
+        $("#SaveMembutton").hide(); 
+        $("#UpdateMembutton").removeAttr('hidden');
 
 
       }).catch(error => {
@@ -345,11 +353,15 @@ CheckEmail(event: Event) {
             cancelButtonText: "No, Cancelar",   
           }).then((result) => {
         if (result.value) {
-
+          $("#SaveMembutton").hide(); 
+          $("#UpdateMembutton").removeAttr('hidden');
+          $('#PhotoButtonPhoto').removeAttr('hidden');
             } 
           });
         }else{
-
+          $("#SaveMembutton").hide(); 
+          $("#UpdateMembutton").removeAttr('hidden');
+          $('#PhotoButtonPhoto').removeAttr('hidden');
           Swal.fire({title:'Error', icon:'error', text: 'An internal server error has occurred please contact the site admin',heightAuto:false});
         }
 
@@ -357,7 +369,154 @@ CheckEmail(event: Event) {
     }
   }
 
-  ngOnInit(){
+  UpdateMember(){
+    
+    var id = $('#id_me').val();
+    var name = $('#name_m').val();
+    var lastname = $('#lastname_m').val();
+    var phone = $('#phone_m').val();
+    var email = $('#email_m').val();
+    var status = $('#status_me').val();
+
+
+    $('#Preloader').show();
+    $('#UpdateMembutton').attr('disabled','disabled');
+    
+
+      const data = {
+      
+        id:id,
+        name:name,
+        lastname:lastname,
+        phone:phone,
+        email:email,
+        status:status
+      };
+
+      const headers = {
+        'Content-Type' : 'application/x-www-form-urlencoded'
+      }
+
+      if(id!="" && name!=""&& lastname!=""&& phone!=""&& email!="" &&  status!=""){
+        this.http.post(this.BaseUrl+'index.php/Members/EditMembers', data, headers).then((response) =>{
+          $('#Preloader').hide();
+          $('#UpdateMembutton').removeAttr('disabled');
+          $('#PhotoButtonPhoto').removeAttr('disabled');
+  
+  
+          
+          Swal.fire({title:'Success', icon:'success', text: 'Your information has been successfully updated',heightAuto:false});
+         
+          this.MemberList();
+
+          $('#id_me').val('');
+          $('#name_m').val('');
+          $('#lastname_m').val('');
+          $('#email_m').val('');
+          $('#phone_m').val('');
+          
+          $('#status_me').val('');
+
+          $("#SaveMembutton").show();
+          $("#UpdateMembutton").attr("hidden",'enabled');
+  
+        }).catch(error => {
+          
+          console.log(error.status);
+          console.log(error.error);// Mensaje de eeror en una cadena.
+          console.log(error.headers);
+  
+  
+          if (error.status="timeout") {
+  
+            Swal.fire({   
+              title: 'Error',
+              text: 'Your device is not connected to internet or your connection is very slow.\n Please try again' ,   
+              icon: 'error',   
+              heightAuto:false,
+              allowOutsideClick: false,
+              showCancelButton: false,   
+              confirmButtonColor: "#DD6B55",   
+              confirmButtonText: "OK",   
+              cancelButtonText: "No, Cancelar",   
+            }).then((result) => {
+          if (result.value) {
+              $("#Preloader").hide();
+              $("#UpdateMembutton").removeAttr('disabled');
+  
+              } 
+            });
+          }else{
+            $("#Preloader").hide();
+            $("#UpdateMembutton").removeAttr('disabled');
+            Swal.fire({title:'Error', icon:'error', text: 'An internal server error has occurred please contact the site admin',heightAuto:false});
+          }
+  
+        });
+      }else{
+        $("#Preloader").hide();
+        $("#UpdateMembutton").removeAttr('disabled');
+        Swal.fire({title:'Warning', icon:'warning', text: 'There is missing info on the form',heightAuto:false});
+      }
+  
+    }  
+ 
+  DeleteMembers(PaID: any){
+
+      
+          var PaID2 = PaID;
+
+      
+            const data = {
+              PaID2:PaID2
+            };
+        
+            const headers = {
+              'Content-Type' : 'application/x-www-form-urlencoded'
+            }
+      
+            this.http.post(this.BaseUrl+'index.php/Members/DeleteMembersBD', data, headers).then((response) =>{
+
+              Swal.fire({title:'Success', icon:'success', text: 'You deleted a member',heightAuto:false});
+              this.MemberList();
+      
+      
+            }).catch(error => {
+              
+              console.log(error.status);
+              console.log(error.error);// Mensaje de eeror en una cadena.
+              console.log(error.headers);
+      
+      
+              if (error.status="timeout") {
+      
+                Swal.fire({   
+                  title: 'Error',
+                  text: 'Your device is not connected to internet or your connection is very slow.\n Please try again' ,   
+                  icon: 'error',   
+                  heightAuto:false,
+                  allowOutsideClick: false,
+                  showCancelButton: false,   
+                  confirmButtonColor: "#DD6B55",   
+                  confirmButtonText: "OK",   
+                  cancelButtonText: "No, Cancelar",   
+                }).then((result) => {
+              if (result.value) {
+      
+                  } 
+                });
+              }else{
+      
+                Swal.fire({title:'Error', icon:'error', text: 'An internal server error has occurred please contact the site admin',heightAuto:false});
+              }
+      
+            });
+          
+        }
+
+  
+  
+     ngOnInit(){
    
 
 }

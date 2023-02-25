@@ -9,28 +9,28 @@
     </ion-toolbar>
   </ion-header>
     
-  <ion-item lines="full" color="secondary">
+  <ion-item lines="full" color="warning">
     <ion-label position="floating">Member name</ion-label>
     <input type="text" id="id_me" hidden="true">
-    <input type="text" id="status" hidden="true">
+    <input type="text" id="status_me" hidden="true">
     <ion-input placeholder="Write your name" id="name_m" color="dark" align="center" required>
     </ion-input>
   </ion-item>
 
 
-  <ion-item lines="full" color="secondary"> 
+  <ion-item lines="full" color="warning"> 
     <ion-label position="floating">lastname</ion-label>
     <ion-input placeholder="Student lastname" id="lastname_m" color="dark" align="center" required>
     </ion-input>
   </ion-item>
 
-  <ion-item lines="full" color="secondary">
+  <ion-item lines="full" color="warning">
     <ion-label position="floating">Phone</ion-label>
     <ion-input placeholder="Phone" id="phone_m" color="dark" (focusout)="CheckPhoneMembers($event)" type="number" align="center" required>
     </ion-input>
   </ion-item>
 
-  <ion-item lines="full" color="secondary">
+  <ion-item lines="full" color="warning">
     <ion-label position="floating">Email</ion-label>
     <ion-input placeholder="Email" id="email_m" color="dark" (focusout)="CheckEmail($event)" type="email" align="center" required>
     </ion-input>
@@ -42,6 +42,7 @@
       <img [src]="clickedImage" id="Photo"/>
   
       <ion-button expand="block" (click)="SaveInfoMember()" id="SaveMembutton" color="dark">Save</ion-button>
+      <ion-button expand="block" (click)="UpdateMember()" id="UpdateMembutton" hidden="true" color="dark">Update</ion-button>
   
       <div id="preloader" align="center" style="display: none">
         <img src="../assets/icon/s.gif" alt="validando...">
@@ -57,7 +58,19 @@
     <ion-card style="width: 100%;" align="center" color="medium">
       <ion-label>
 
+        <ion-buttons>
         
+          <ion-button (click)="EditMember(m.id_Member)" id="editMembersmbutton" style="font-size: 20px;" >
+            <ion-icon name="create-sharp" color="primary"></ion-icon>
+          </ion-button>
+
+          <ion-button (click)="DeleteMembers(m.id_Member)" id="deleteMembersbutton" style="font-size: 20px;">
+            <ion-icon name="trash-sharp" color="danger"></ion-icon>
+          </ion-button>
+        
+
+        </ion-buttons> 
+
           <p>Members name</p>
           <h1>{{m.name_m}}</h1>
           <br>
@@ -70,6 +83,10 @@
           <p>Email</p>
           <h1>{{m.email_m}}</h1>
           <br>
+          <p>Photo</p>
+          <img src="http://192.168.3.41/BACKEND_LMovil/assets/myapp/img/{{m.Photo_name_m}}"/>
+          <br>
+          
   
 
          

@@ -14,14 +14,14 @@
   <ion-card-title>Shipment Information</ion-card-title>
   <ion-item lines="full" color="success">
     <ion-label position="floating">Track number</ion-label>
-    <ion-input placeholder="Phone" id="track_number" color="dark" (focusout)="CheckTracknumber($event)" type="number" align="center" required>
+    <ion-input placeholder="Track number" id="track_number" color="dark" (focusout)="CheckTracknumber($event)" type="number" align="center" required>
     </ion-input>
   </ion-item>
 
   <ion-item lines="full" color="secondary">
     <ion-label position="floating">Sender name</ion-label>
-    <input type="text" id="id_me" hidden="true">
-    <input type="text" id="status" hidden="true">
+    <input type="text" id="id_d" hidden="true">
+    <input type="text" id="status_d" hidden="true">
     <ion-input placeholder="Write your name" id="name_d" color="dark" align="center" required>
     </ion-input>
   </ion-item>
@@ -44,12 +44,14 @@
     </ion-input>
   </ion-item>
 
+   
     <div id="container">
-      <ion-button (click)="PictureOptions()" expand="full" id="PhotoButton_d" >Take Picture</ion-button>
-      
-      <img [src]="clickedImage" id="Photo"/>
+        <ion-button (click)="PictureOptions()" expand="full" id="PhotoButton_d" >Take Picture</ion-button>
+        
+        <img [src]="clickedImage" id="Photo"/>
   
       <ion-button expand="block" (click)="SaveInfoDeliver()" id="savebutton_delivery" color="dark">Save</ion-button>
+      <ion-button expand="block" (click)="UpdateDelivery()" id="Updatebutton_delivery" hidden="true" color="dark">Update</ion-button>
   
       
       <div id="preloader" align="center" style="display: none">
@@ -66,12 +68,32 @@
     <ion-card style="width: 100%;" align="center" color="medium">
       <ion-label>
 
+        <ion-buttons>
         
-                <p>Customer name</p>
+          <ion-button (click)="EditDelivery(D.id_delivery)" id="editdeliverymbutton" style="font-size: 20px;" >
+            <ion-icon name="create-sharp" color="primary"></ion-icon>
+          </ion-button>
+
+          <ion-button (click)="DeleteDelivery(D.id_delivery)" id="deletedeliverysbutton" style="font-size: 20px;">
+            <ion-icon name="trash-sharp" color="danger"></ion-icon>
+          </ion-button>
+        
+
+        </ion-buttons>   
+                <p>Track number:</p>
+                <h1>{{D.track_d}}</h1>
+                <br>        
+                <p>Sender name:</p>
                 <h1>{{D.sender_d}}</h1>
                 <br>
-                <p>Shipping address</p>
+                <p>Shipping address:</p>
                 <h1>{{D.ship_address_d}}</h1>
+                <br>
+                <p>Ship to: </p>
+                <h1>{{D.ship_to_d}}</h1>
+                <br>
+                <p>Photo </p>
+                <img src="http://192.168.3.41/BACKEND_LMovil/assets/myapp/img/{{D.Photo_d}}"/>
                 <br>
       
 

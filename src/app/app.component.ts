@@ -14,7 +14,8 @@ import * as $ from "jquery";
 })
 export class AppComponent {
 
-  URL_Link = "http://192.168.0.2/BACKEND_LMovil/";
+  URL_Link = "http://192.168.3.41/BACKEND_LMovil/";
+  
   constructor(private http: HTTP, private menuCtrl : MenuController, private router:Router, private storage: Storage, private platform:Platform) {
     this.initializeApp();
   }

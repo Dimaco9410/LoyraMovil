@@ -3,47 +3,44 @@
     <ion-buttons slot="start">
     <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Generate PDF</ion-title>
+    <ion-title>Home</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <div align="center">
+    <img src="../assets\icon/Homen.jpg" width="450px" height="250px">
+    <h1>Trips List</h1>
+  </div>
   
 
-  <div id="Preloader" align="center" style="display: none">
-    <img src="../assets\icon/Homen.jpg" width="450px" height="250px">
-  </div>
-
   <ion-item *ngFor="let T of TripsServer">
-              <ion-card style="width: 100%;" align="center" color="tertiary">
-                <ion-label>
-          
-                  <ion-card-content>
-                    Today trips
-                  </ion-card-content>
-                    <p>Customer</p>
-                    <h1>{{T.name_c}}</h1>
-                    <br>
-                    <p>Last name </p>
-                    <h1>{{T.last_name_c}}</h1>
-                    <br>
-                    <p>Phone</p>
-                    <h1>{{T.phone_c}}</h1>
-                    <br>
-                    <p>Destination</p>
-                    <h1>{{T.destination_rese}}</h1>
-                    <br>
-                    <p>Driver</p>
-                    <h1>{{T.Driver_c}}</h1>
-                    <br>
-                    <p>Date</p>
-                    <h1>{{T.Date}}</h1>
-                    <br>
-    
+    <ion-card style="width: 100%;" align="center" color="medium">
+      <ion-label>
 
        
 
+                        <p>Customer</p>
+                        <h1>{{T.name_c}}</h1>
+                        <br>
+                        <p>Last name </p>
+                        <h1>{{T.last_name_c}}</h1>
+                        <br>
+                        <p>Phone</p>
+                        <h1>{{T.phone_c}}</h1>
+                        <br>
+                        <p>Destination</p>
+                        <h1>{{T.destination_rese}}</h1>
+                        <br>
+                        <p>Driver</p>
+                        <h1>{{T.driver_c}}</h1>
+                        <br>
+                        <p>Date</p>
+                        <h1>{{T.date}}</h1>
+                        <br>
+  
+
+         
       </ion-label>
 
       <br>
@@ -53,3 +50,4 @@
   </ion-item>
 
 </ion-content>
+

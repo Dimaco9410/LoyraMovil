@@ -19,12 +19,12 @@ import * as $ from "jquery";
     
       BaseUrl = this.Link.BaseLink();
       constructor(private http: HTTP, private Link: AppComponent, private actionSheetCtrl: ActionSheetController) {
-        this.DeliveryList();
+        this.TList();
        }
 
-      TripsServer : any;
-      
-      DeliveryList(){
+       TripsServer : any;
+     
+       TList(){
 
         const data ={
          
@@ -35,11 +35,11 @@ import * as $ from "jquery";
           'Content-Type' : 'application/x-www-form-urlencoded'
         }
       
-            this.http.get(this.BaseUrl+'index.php/Trips/TripsPerDay', data, headers).then((response) =>{
+            this.http.get(this.BaseUrl+'index.php/Trips/ActiveTripsList', data, headers).then((response) =>{
               
               console.log(response.data)
               this.TripsServer =  JSON.parse(response.data);
-              //console.log(this.MemberPDFServer);
+              console.log(this.TripsServer);
                
             }).catch(error => {
               
@@ -71,9 +71,9 @@ import * as $ from "jquery";
       
             });
       
-        } 
+        }
     
-      ngOnInit() {
+  ngOnInit() {
       }
     
-    }
+}
